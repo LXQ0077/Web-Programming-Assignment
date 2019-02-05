@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>LeLe Art Club</title>
+		<!-- load CSS -->
+		<link rel="stylesheet" type="text/css" href="/webStyle.css"/>
+		<!-- load CSS, jQuery, popper and bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<!-- inport socket.io -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+		<!-- <script src="/socket.io/socket.io.js"></script> -->
+		<!-- load JavaScript -->
+		<script src="/webScript.js" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<!-- navigator bar -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand navTitle">LeLe Art Club</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav navbar-left" id="myTab">
+						<!--  nav-justified <li class="active"><a href = "#">Home</a></li> -->
+						<li class="active"><a href = "#home">Home</a></li>
+
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="">
+								Art Gallery<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#famousWorks"> Famous Works </a></li>
+								<li><a href="#studentWorks"> Student Works </a></li>
+							</ul>
+						</li>
+
+						<!-- <li><a href="#">Activity</a></li> -->
+						<li class="dropdown">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="">
+								Groups<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#thursdayC"> Thursday C </a></li>
+								<li><a href="#saturdayA"> Saturday A </a></li>
+							</ul>
+						</li>
+						<li><a href="#information">Information</a></li>
+					</ul>
+					<!-- registration login -->
+					<ul id="loginSys" class="nav navbar-nav navbar-right">
+						<li id="regBtn"><a data-toggle="modal" data-target="#register" href="#register"><span class="glyphicon glyphicon-pencil"></span> Register</a></li>
+						<!-- https://www.cnblogs.com/Jacklovely/p/6476846.html?utm_source=itdadao&utm_medium=referral -->
+						<li id="loginBtn"><a data-toggle="modal" data-target="#login" href="#login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
+						<!-- <li id="loginUser" display="none"><a href="#user"><span class="glyphicon glyphicon-user"></span> </a></li> -->
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- register modal -->
+		<div id="register" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myRegisterTitle" aria-hidden="true">
+			<div class="modal-dialog" >
+				<div class="modal-content" >
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modalTitle" id="myRegisterTitle">Register</h4>
+					</div>
+					<div class="modal-body">
+						<p class="formWarning">Fields with * must be filled out</p>
+						<form role="form" name="regForm">
+							<div class="form-group">
+								<label for="firstName"><span class="glyphicon glyphicon-user"></span> First Name<span class="redstar">*</span></label>
+								<input class="form-control" type="text" name="firName" id="firstName" placeholder="please enter your first name (名)">
+							</div>
+							<div class="form-group">
+								<label for="lastName"><span class="glyphicon glyphicon-user"></span> Last Name<span class="redstar">*</span></label>
+								<input class="form-control" type="text" name="laName" id="lastName" placeholder="please enter your last name (姓)">
+							</div>
+							<div class="form-group">
+								<label for="RegUsername"><span class="glyphicon glyphicon-user"></span> Username<span class="redstar">*</span></label>
+								<input class="form-control" type="text" name="usrName" id="regUsername" placeholder="6-15 letters or characters or numbers">
+							</div>
+							<div class="form-group">
+								<label for="inputPassword"><span class="glyphicon glyphicon-lock"></span> Password<span class="redstar">*</span></label>
+								<input class="form-control" type="password" name="inPsw" id="inputPassword" placeholder="at least 6 digits">
+							</div>
+							<div class="form-group">
+								<label for="confirmPassword"><span class="glyphicon glyphicon-lock"></span> Confirm Password<span class="redstar">*</span></label>
+								<input class="form-control" type="password" name="conPsw" id="confirmPassword" placeholder="please enter the password again">
+							</div>
+							<div class="form-group">
+								<label for="email"><span class="glyphicon glyphicon-envelope"></span> Email Address</label>
+								<input class="form-control" type="email" name="ema" id="email" placeholder="e.g. a@a.com  One email can only register once.">
+							</div>
+							<button type="button" class="btn btn-success btn-block" id="registerSubmit"> Submit</button>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+							<p align="left">Is a member? <a href="#" id="LoginOnRegister">Login</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- login modal -->
+		<div class="modal fade"  id="login" tabindex="-1" role="dialog" aria-labelledby="myLoginTitle" aria-hidden="true">
+			<div class="modal-dialog" >
+					<div class="modal-content" >
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modalTitle" id="myLoginTitle">Log in</h4>
+						</div>
+						<div class="modal-body">
+							<!-- <form role="form" action="/" method="POST"> -->
+							<form role="form" name="loginForm">
+								<div class="form-group">
+									<label for="LoginUsername"><span class="glyphicon glyphicon-user"></span> Username</label>
+									<input class="form-control" type="text" id="LoginUsername" placeholder="Enter email or username">
+								</div>
+								<div class="form-group">
+		              <label for="psw"><span class="glyphicon glyphicon-lock"></span> Password</label>
+		              <input type="password" class="form-control" id="psw" placeholder="Enter password">
+		            </div>
+								<button type="button" class="btn btn-success btn-block" id="loginSubmit"> Login</button>
+							</form>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+				          <p align="left">Not a member? <a href="#" id="regOnLogin">Sign Up</a></p>
+				          <p align="left">Forgot <a href="#">Password?</a></p>
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+
+		<!-- 正文 -->
+		<div class="tab-content" id="myTabContent">
+			<!-- Home -->
+			<div class="tab-pane fade in active" id="home">
+				<!-- Home header -->
+				<div class="homeTitleImg">
+					<!-- title -->
+					<div class="text-center">
+						<h1 class="mainTitle">樂樂藝吧
+							<small class="mainTitle"> LeLe Art Club </small>
+						</h1>
+					</div>
+				</div>
+				<div class= "container">
+					<div class="row">
+						<div class="col-sm-9 col-md-6 col-lg-8">
+							<h2>Chinese Calligraphy</h2>
+							<img src="/pic/home1.jpg" alt="home1" style="transform: rotate(180deg)">
+						</div>
+
+						<div class="col-sm-3 col-md-6 col-lg-4">
+							<p class="content">
+								A、特色
+								从教你学习到带你学习。
+								从灌输式学习到体验式学习。
+								从单一式学习到的多方位学习。
+							</p>
+							<p class="content">
+								B、两个课程体系班
+								青少儿童班(7一16岁）
+								成人班( 16岁以上）
+							</p>
+							<p class="content">
+								C、教学方法
+								以临帖为主，梳理文字学为辅。
+								研修用笔之核心问题为主。
+								动态学习引导用笔与造型结构的关系。
+								初学创作书法作品。
+								参以水墨画法，诗词等学习。
+								探索东方文化美学。
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Famous Works -->
+			<div class="tab-pane fade" id="famousWorks">
+				<div class="titleImg">
+				</div>
+				<div class= "container">
+					<p class="content">Master Pieces</p>
+				</div>
+			</div>
+
+			<!-- Student works -->
+			<div class="tab-pane fade" id="studentWorks">
+				<div class="titleImg">
+				</div>
+				<div class= "container">
+					<p class="content">Student works</p>
+				</div>
+			</div>
+
+			<!-- groups -->
+			<!-- thursdayC -->
+			<div class="tab-pane fade" id="thursdayC">
+				<div class="groupsTitleImg">
+					<div class="text-center">
+						<h1 class="mainTitle">樂樂藝吧
+							<small class="mainTitle"> LeLe Art Club </small>
+						</h1>
+					</div>
+				</div>
+				<div class= "container">
+					<h2>thursday C</h2>
+				</div>
+			</div>
+
+			<!-- saturdayA -->
+			<div class="tab-pane fade" id="saturdayA">
+				<div class="groupsTitleImg">
+					<div class="text-center">
+						<h1 class="mainTitle">樂樂藝吧
+							<small class="mainTitle"> LeLe Art Club </small>
+						</h1>
+					</div>
+				</div>
+				<div class= "container">
+					<div class="row">
+						<div class="col-sm-3 col-md-3 col-lg-4">
+							<h2>saturday A</h2>
+						</div>
+						<div class="col-sm-9 col-md-9 col-lg-8">
+							<h2>Chat Room</h2>
+							<section id="chatbox" class="chat-wrap">
+								<!-- post message here -->
+						 </section>
+							<section id="input_zone">
+				        <!-- <input name="usermsg" type="textarea" id="usermsg" size="63"> -->
+								<textarea name="usermsg" id="usermsg" class="message-ipt" type="text" placeholder="Please enter the message"></textarea>
+				        <button name="sendMsg" type="button" id="sendMsg" class="ipt-btn" value="Send"> Send</button>
+				    	</section>
+							<br>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+
+			<!-- Information -->
+			<div class="tab-pane fade" id="information">
+				<div class="titleImg">
+				</div>
+				<h2>information</h2>
+			</div>
+
+		</div>
+	</body>
+</html>
