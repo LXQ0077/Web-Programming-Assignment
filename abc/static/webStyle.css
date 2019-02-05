@@ -1,0 +1,211 @@
+img {
+	width: 100%;
+	height: auto;
+}
+
+div.homeTitleImg {
+	/* width: 100%;
+	height: 450px; */
+	background-image: url("pic/QLJST1270.jpeg");
+	/* transform: rotate(270deg); */
+	/* background-size: cover;
+	background-repeat: no-repeat; */
+	/* opacity: 0.9;
+	filter: alpha(opacity=90); */
+
+}
+
+div.groupsTitleImg1{
+	background-image: url("pic/QLJST2270.jpeg");
+}
+
+div.groupsTitleImg2{
+	background-image: url("pic/QLJST3270.jpeg");
+}
+
+div.galleryTitleImg{
+	background-image: url("pic/QLJST4270.jpeg");
+}
+
+div.galleryTitleImg, div.groupsTitleImg1, div.groupsTitleImg2, div.homeTitleImg{
+	width: 100%;
+	height: 450px;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+
+
+h1.mainTitle {
+	position: relative;
+	top: 90px;
+	font-size: 5em;
+	font-family: "隶书", cursive, sans-serif;
+	color: #000000;
+}
+
+p.content {
+	font-size: 1.3em;
+}
+
+p.formWarning, span.redstar{
+	font-size: 1.2em;
+	color:#FF0000
+}
+
+a.navTitle{
+	font-size: 1.3em;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+li {
+	font-size: 1.2em;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+h2.subttl{
+	text-align: center;
+	font-weight: bold;
+	font-size: 3em;
+}
+
+h5.card-title{
+	font-weight: bold;
+	font-size: 1.6em;
+}
+
+small.mainTitle{
+	color: #000000;
+	font-family: "Comic Sans MS",cursive, sans-serif;
+}
+
+h4.modalTitle {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+/* Group chat */
+
+section.chat-wrap{
+	text-align:left;
+	margin:0 auto;
+	margin-bottom:25px;
+	padding:10px;
+	background:url("pic/bg22.jpg") no-repeat;
+	height:500px;
+	width:100%;
+	border:2px solid #ACD8F0;
+	overflow:auto;
+	margin-top: 20px;
+
+}
+
+
+section.uList{
+	text-align:left;
+	margin:0 auto;
+	margin-bottom:25px;
+	padding:10px;
+	background:#fff;
+	background-color: #fff;
+	height:400px;
+	width:100%;
+	border:2px solid #ACD8F0;
+	background:url("pic/bg00.jpg");
+	overflow:auto;
+	margin-top: 20px;
+	width:100%;
+}
+
+textarea.message-ipt {
+	width: 90%;
+	height: 70px;
+}
+
+button.ipt-btn{
+	width:9%;
+}
+
+/* p.othersMessage, p.myMessage{
+
+} */
+
+.msg{
+	font-size: 1.3em;
+	display: inline-block;
+	padding: 8px 11px;
+	border-radius:6px;
+
+}
+.myMsg{
+	background-color:#74ED57;
+	border: 1px solid #4FE829;
+}
+
+.othMsg{
+	background-color:#d0e7ff;
+	border: 1px solid #c9dfff;
+}
+
+.hisMsg{
+	background-color: #C0C0C0;
+	border: 1px solid #C0C0C0;
+}
+
+p.othersMessage{
+	text-align: left;
+}
+
+p.myMessage{
+	text-align: right;
+	/* background-color:#74ED57;
+	border: 1px solid #4FE829; */
+
+}
+
+#userList, #addMsg{
+	font-size: 1.3em;
+	text-align: center;
+	font-weight:bold;
+}
+
+#logout{
+	margin-right: 10px;
+}
+
+p.historyMsg{
+	text-align: center;
+}
+
+#footer{
+	font-size: 1.1em;
+	color: white;
+	text-align: center;
+	background-color: #343a40;
+}
+
+div.container{
+	background-image: url("pic/bg44.jpg");
+	/* max-width: 100%;
+	height: auto; */
+	/* background-color:	#C8C8C8; */
+}
+
+div.card{
+	font-size: 1.3em;
+	border: 2px solid #black;
+	display: inline-block;
+}
+
+#ipt_leaveMsg{
+	width:100%;
+}
+
+div.panel-heading{
+	font-weight: bold;
+	font-size: 1.8em;
+}
+
+div.panel-body{
+	font-size: 1.5em;
+}

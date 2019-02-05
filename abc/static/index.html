@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>LeLe Art Club</title>
+		<!-- load CSS -->
+		<link rel="stylesheet" type="text/css" href="/webStyle.css"/>
+		<!-- load CSS, jQuery, popper and bootstrap -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- loade encryption -->
+		<script type="text/ecmascript" src="/md5.js"></script>
+		<!-- jQuery library -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<!-- inport socket.io -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+		<!-- <script src="/socket.io/socket.io.js"></script> -->
+		<!-- load JavaScript -->
+		<script src="/webScript.js" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<!-- navigator bar -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand navTitle">LeLe Art Club</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<ul class="nav navbar-nav navbar-left" id="myTab">
+						<!--  nav-justified <li class="active"><a href = "#">Home</a></li> -->
+						<li class="nav-item active"><a href = "#home">Home</a></li>
+						<li class="nav-item"><a href="#gallery">Gallery</a></li>
+						<!-- <li><a href="#">Activity</a></li> -->
+						<li class="nav-item dropdown">
+							<a class="dropdown-toggle" id="groups" data-toggle="dropdown" href="">
+								Members<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li><a href="#groupChat"> Group Chat </a></li>
+								<li><a href="#messageBoard"> Message Board </a></li>
+							</ul>
+						</li>
+
+					</ul>
+					<!-- registration login -->
+					<ul id="loginSys" class="nav navbar-nav navbar-right">
+						<li class="nav-item" id="regBtn"><a data-toggle="modal" data-target="#register" href="#register"><span class="glyphicon glyphicon-pencil"></span> Register</a></li>
+						<!-- https://www.cnblogs.com/Jacklovely/p/6476846.html?utm_source=itdadao&utm_medium=referral -->
+						<li class="nav-item" id="loginBtn"><a data-toggle="modal" data-target="#login" href="#login"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li>
+						<!-- display user -->
+						<li class="nav-item" id="loginUser" style="display:none"><a href="#user"><span class="glyphicon glyphicon-user"></span> </a></li>
+						<!-- logout button -->
+						<li class="nav-item" id="logout" style="display:none"><button type="button" class="btn btn-success navbar-btn">Logout</button></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- register modal -->
+		<div id="register" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myRegisterTitle" aria-hidden="true">
+			<div class="modal-dialog" >
+				<div class="modal-content" >
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modalTitle" id="myRegisterTitle">Register</h4>
+					</div>
+					<div class="modal-body">
+						<p class="formWarning">Fields with * must be filled out</p>
+						<form role="form" name="regForm">
+							<div class="form-group">
+								<label for="forename"><span class="glyphicon glyphicon-user"></span> First Name<span class="redstar">*</span></label>
+								<input class="form-control" type="text" name="firName" id="forename" placeholder="please enter your first name (名)">
+							</div>
+							<div class="form-group">
+								<label for="surname"><span class="glyphicon glyphicon-user"></span> Last Name<span class="redstar">*</span></label>
+								<input class="form-control" type="text" name="laName" id="surname" placeholder="please enter your last name (姓)">
+							</div>
+							<div class="form-group">
+								<label for="RegUsername"><span class="glyphicon glyphicon-user"></span> Username<span class="redstar">*</span></label>
+								<input class="form-control" type="text" name="usrName" id="regUsername" placeholder="6-15 letters or characters or numbers">
+							</div>
+							<div class="form-group">
+								<label for="inputPassword"><span class="glyphicon glyphicon-lock"></span> Password<span class="redstar">*</span></label>
+								<input class="form-control" type="password" name="inPsw" id="inputPassword" placeholder="at least 6 digits">
+							</div>
+							<div class="form-group">
+								<label for="confirmPassword"><span class="glyphicon glyphicon-lock"></span> Confirm Password<span class="redstar">*</span></label>
+								<input class="form-control" type="password" name="conPsw" id="confirmPassword" placeholder="please enter the password again">
+							</div>
+							<div class="form-group">
+								<label for="email"><span class="glyphicon glyphicon-envelope"></span> Email Address</label>
+								<input class="form-control" type="email" name="ema" id="email" placeholder="e.g. a@a.com  One email can only register once.">
+							</div>
+							<button type="button" class="btn btn-success btn-block" id="registerSubmit"> Submit</button>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+							<p align="left">Is a member? <a href="#" id="LoginOnRegister">Login</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- login modal -->
+		<div class="modal fade"  id="login" tabindex="-1" role="dialog" aria-labelledby="myLoginTitle" aria-hidden="true">
+			<div class="modal-dialog" >
+					<div class="modal-content" >
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4 class="modalTitle" id="myLoginTitle">Log in</h4>
+						</div>
+						<div class="modal-body">
+							<!-- <form role="form" action="/" method="POST"> -->
+							<form role="form" name="loginForm">
+								<div class="form-group">
+									<label for="LoginUsername"><span class="glyphicon glyphicon-user"></span> Username</label>
+									<input class="form-control" type="text" id="LoginUsername" placeholder="Enter email or username">
+								</div>
+								<div class="form-group">
+		              <label for="psw"><span class="glyphicon glyphicon-lock"></span> Password</label>
+		              <input type="password" class="form-control" id="psw" placeholder="Enter password">
+		            </div>
+								<button type="button" class="btn btn-success btn-block" id="loginSubmit"> Login</button>
+							</form>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-danger btn-default pull-right" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+				          <p align="left">Not a member? <a href="#" id="regOnLogin">Sign Up</a></p>
+				          <!-- <p align="left">Forgot <a href="#">Password?</a></p> -->
+							</div>
+						</div>
+					</div>
+			</div>
+		</div>
+
+		<!-- 正文 -->
+		<div class="tab-content" id="myTabContent">
+			<!-- Home -->
+			<div class="tab-pane fade in active" id="home">
+				<!-- Home header -->
+				<div class="homeTitleImg">
+					<!-- title -->
+					<div class="text-center">
+						<h1 class="mainTitle">樂樂藝吧
+							<small class="mainTitle"> LeLe Art Club </small>
+						</h1>
+					</div>
+				</div>
+				<div class= "container">
+					<h2 class="subttl">LeLe Art Club</h2>
+					<div class="row">
+						<div class="col-md-6 col-lg-6">
+							<div class="card">
+							  <img class="card-img-top img-rounded" src="/pic/home1.jpg" alt="home1">
+							  <div class="card-body">
+							    <h5 class="card-title">Learing Chinese Calligraphy</h5>
+							    <p class="card-text">Learn not only the skill of handwriting, but also the traditional culture and life-style.</p>
+							  </div>
+							</div>
+						</div>
+
+						<div class="col-md-6 col-lg-6">
+							<div class="card">
+							  <img class="card-img-top img-rounded" src="/pic/home2.jpg" alt="home2">
+							  <div class="card-body">
+							    <h5 class="card-title">Mr. Yu —— the teacher</h5>
+							    <p class="card-text">With strong specialised knowledge and teaching experience.</p>
+							  </div>
+							</div>
+						</div>
+					</div>
+					<h2 class="subttl">Classes</h2>
+					<div class="row">
+						<div class="col-md-6 col-lg-6">
+							<div class="card">
+							  <img class="card-img-top img-rounded" src="/pic/home3.jpg" alt="home1">
+							  <div class="card-body">
+							    <h5 class="card-title">For children</h5>
+							    <p class="card-text">Learning chinese calligraphy is a good way to start exploring Chinese Aesthetics.</p>
+							  </div>
+							</div>
+						</div>
+
+						<div class="col-md-6 col-lg-6">
+							<div class="card">
+							  <img class="card-img-top img-rounded" src="/pic/home4.jpg" alt="home2">
+							  <div class="card-body">
+							    <h5 class="card-title">For aduals</h5>
+							    <p class="card-text">Writing is a good way to cultivate the mind. </p>
+							  </div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- groups -->
+			<!-- thursdayC -->
+			<div class="tab-pane fade" id="messageBoard">
+				<div class="groupsTitleImg1">
+					<div class="text-center">
+						<h1 class="mainTitle">樂樂藝吧
+							<small class="mainTitle"> LeLe Art Club </small>
+						</h1>
+					</div>
+				</div>
+				<div class= "container">
+					<h2 class="subttl">Message Board</h2>
+					<section id="leaveMsgSec" style="text-align:center">
+						<!-- <input name="usermsg" type="textarea" id="usermsg" size="63"> -->
+						<textarea name="leaveMsg" id="ipt_leaveMsg"  type="text" placeholder="Enter your message here"></textarea>
+						<button name="addMessage" type="button" id="addMsg" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Leave Message </button>
+					</section>
+					<!-- <div style="text-align:center">
+						<button name="addMessage" type="button" id="addMsg" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Leave Message </button>
+					</div> -->
+					<br>
+					<div id="MessageLists">
+						<!-- <div class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">
+										带有 title 的面板标题
+								</h3>
+							</div>
+							<div class="panel-body">
+								这是一个基本的面板
+								<br>
+								<button class="btn btn-default"> button</button>
+							</div>
+						</div> -->
+					</div>
+				</div>
+			</div>
+
+			<!-- saturdayA -->
+			<div class="tab-pane fade" id="groupChat">
+				<div class="groupsTitleImg2">
+					<div class="text-center">
+						<h1 class="mainTitle">樂樂藝吧
+							<small class="mainTitle"> LeLe Art Club </small>
+						</h1>
+					</div>
+				</div>
+				<div class= "container">
+					<h2 class="subttl">Chat Room</h2>
+					<div class="row">
+						<div class="col-sm-3 col-md-3 col-lg-4">
+							<!-- list all the users -->
+							<h2 class="subttl">All users</h2>
+							<div style="text-align:center">
+								<button name="checkUser" type="button" id="checkOnlineUser" class="btn btn-info"> Refresh <br>to check all the users </button>
+							</div>
+							<section id="userList" class="uList">
+								<!-- list all onlie users -->
+							</section>
+						</div>
+						<div class="col-sm-9 col-md-9 col-lg-8">
+							<section id="chatbox" class="chat-wrap">
+								<!-- <div class="chatboxBG img-responsive">
+								post message here
+								</div> -->
+						 </section>
+							<section id="input_zone">
+				        <!-- <input name="usermsg" type="textarea" id="usermsg" size="63"> -->
+								<textarea name="usermsg" id="usermsg" class="message-ipt" type="text" placeholder="Please enter the message"></textarea>
+				        <button name="sendMsg" type="button" id="sendMsg" class="btn btn-primary" value="Send"> Send</button>
+				    	</section>
+							<br>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!-- gallery -->
+			<div class="tab-pane fade" id="gallery">
+				<div class="galleryTitleImg">
+					<div class="text-center">
+						<h1 class="mainTitle">樂樂藝吧
+							<small class="mainTitle"> LeLe Art Club </small>
+						</h1>
+					</div>
+				</div>
+				<div class="container">
+				<h2 class="subttl">Pictures Display</h2>
+					<!-- carousel -->
+					<div id="myCarousel" class="carousel slide">
+						<!-- 轮播（Carousel）指标 -->
+						<ol class="carousel-indicators">
+							<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+							<li data-target="#myCarousel" data-slide-to="1"></li>
+							<li data-target="#myCarousel" data-slide-to="2"></li>
+							<li data-target="#myCarousel" data-slide-to="3"></li>
+							<li data-target="#myCarousel" data-slide-to="4"></li>
+						</ol>
+						<!-- 轮播（Carousel）项目 -->
+						<div class="carousel-inner">
+							<div class="item active">
+								<img src="pic/picDis1.jpg" alt="First slide">
+								<div class="carousel-caption">Environment</div>
+							</div>
+							<div class="item">
+								<img src="pic/picDis2.jpg" alt="Second slide">
+								<div class="carousel-caption">Peaceful</div>
+							</div>
+							<div class="item">
+								<img src="pic/picDis5.jpg" alt="Third slide">
+								<div class="carousel-caption">Practice</div>
+							</div>
+							<div class="item">
+								<img src="pic/picDis3.jpg" alt="Fourth slide">
+								<div class="carousel-caption">Time</div>
+							</div>
+							<div class="item">
+								<img src="pic/picDis4.jpg" alt="Fifth slide">
+								<div class="carousel-caption">Practice</div>
+							</div>
+						</div>
+						<!-- 轮播（Carousel）导航 -->
+						<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+						    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						    <span class="sr-only">Previous</span>
+						</a>
+						<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+						    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						    <span class="sr-only">Next</span>
+						</a>
+					</div>
+					<br>
+					<h2 class="subttl">Learning Masterpiece</h2>
+					<div class="ltx">
+						<a href="https://en.wikipedia.org/wiki/Lantingji_Xu"><img src="/pic/lantingxu01.jpg" alt="Lantingji_Xu"></a>
+						<h3 style="text-align: center">Lan Ting Ji Xu  兰亭集序 - Xizhi Wang 王羲之</h3>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-lg-6">
+							<a href="https://en.wikipedia.org/wiki/Shu_Pu"><img src="/pic/shupu.jpg" alt="shupu"></a>
+							<h3 style="text-align: center">Shu Pu  书谱 - Guoting Sun 孙过庭</h3>
+						</div>
+
+						<div class="col-md-6 col-lg-6">
+							<a href="https://en.wikipedia.org/wiki/Ouyang_Xun"><img src="/pic/jiuchenggongbei.jpg" alt="jiuchenggongbei"></a>
+							<h3 style="text-align: center">Jiu Cheng Gong Bei 九成宫碑 - Xun Ouyang 欧阳询</h3>
+						</div>
+
+					</div>
+					<br>
+				</div>
+			</div>
+		</div>
+
+		<!-- footer -->
+		<footer class="footer" id="footer">
+			<br>
+			<p style="font-size:1.3em">Contact Us</p>
+			<hr style="width:40%"/>
+			<p>Mr. Yu: +86 18600161145</p>
+			<br>
+			<p>Building No.2, Fulinyuan,</p>
+			<p>Chaoyang District,</p>
+			<p>Beijing, China</p>
+			<br>
+			<hr style="width:40%"/>
+			<p>Photos credit to Mr. Yu and 中国书画报</p>
+		</footer>
+	</body>
+</html>
